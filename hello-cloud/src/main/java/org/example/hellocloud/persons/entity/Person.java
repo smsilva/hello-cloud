@@ -1,10 +1,13 @@
 package org.example.hellocloud.persons.entity;
 
 import javax.validation.constraints.NotNull;
+import org.example.hellocloud.persons.control.UserNameNotTaken;
 
 public class Person {
 
     private Long id;
+    
+    @UserNameNotTaken
     private String name;
 
     @NotNull(message = "{person.gender.notnull}")

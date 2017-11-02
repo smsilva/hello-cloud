@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import javax.ejb.Singleton;
 import org.example.hellocloud.persons.entity.Person;
 
@@ -43,6 +44,15 @@ public class PersonRepository {
 
     public List<Person> listAll() {
 	return new ArrayList<>(this.list.values());
+    }
+    
+    public boolean isNameTaken(String name) {
+	Optional<Person> person = this.listAll()
+		.stream()
+		.filter(p -> p.getName().equalsIgnoreCase(name))
+		.findFirst();
+	
+	return person.isPresent();
     }
 
 }
