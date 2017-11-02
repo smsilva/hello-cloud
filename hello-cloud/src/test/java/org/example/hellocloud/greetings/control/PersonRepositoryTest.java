@@ -1,5 +1,6 @@
 package org.example.hellocloud.greetings.control;
 
+import java.util.List;
 import org.example.hellocloud.greetings.entity.Person;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -62,6 +63,13 @@ public class PersonRepositoryTest {
 	
 	person = personRepository.findById(Long.parseLong("1"));
 	assertTrue(person == null);
+    }
+    
+    @Test
+    public void list() {
+	insert();
+	List<Person> list = personRepository.listAll();
+	assertTrue(list.size() > 0);
     }
 
 }

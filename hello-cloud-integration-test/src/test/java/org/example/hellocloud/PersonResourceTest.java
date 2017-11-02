@@ -2,10 +2,11 @@ package org.example.hellocloud;
 
 import java.io.ByteArrayInputStream;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -13,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-public class HelloCloudApiTest {
+public class PersonResourceTest {
 
     private TestProperties properties;
     private String url;
@@ -21,35 +22,22 @@ public class HelloCloudApiTest {
     @Before
     public void before() throws Exception {
 	this.properties = new TestProperties();
-	this.url = properties.getProperty("hello.url");	
+	this.url = properties.getProperty("hello.url");
     }
-
-    @Test
-    public void greetingsHello() {
-	Client client = ClientBuilder.newClient();
-	Response response = client
+    
+    private WebTarget getTarget() {
+	return ClientBuilder.newClient()
 		.target(url)
-		.path("greetings")
-		.request()
-		.get(Response.class);
-
-	assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-
-	JsonObject json = response.readEntity(JsonObject.class);
-
-	assertEquals("Hello!", json.getString("message"));
+		.path("persons");
     }
 
     @Test
-    public void validation() {
+    public void insert() {
 	JsonObject person = Json.createObjectBuilder()
 		.add("name", "Silvio Silva")
 		.build();
 
-	Client client = ClientBuilder.newClient();
-	Response response = client
-		.target(url)
-		.path("greetings")
+	Response response = getTarget()
 		.request()
 		.post(Entity.json(person.toString()));
 
@@ -62,13 +50,11 @@ public class HelloCloudApiTest {
     }
 
     @Test
-    public void get() {
-	validation();
-		
-	Client client = ClientBuilder.newClient();
-	Response response = client
-		.target(url)
-		.path("greetings/{id}")
+    public void getById() {
+	insert();
+
+	Response response = getTarget()
+		.path("{id}")
 		.resolveTemplate("id", 1)
 		.request()
 		.get();
@@ -81,9 +67,28 @@ public class HelloCloudApiTest {
 		.readObject();
 
 	assertNotNull(person);
-	
+
 	String name = person.getString("name");
-	assertTrue("Name returned: " + name, name.contains("Silvio Silva"));
+	assertTrue("Name returned: " + name, name.startsWith("Silvio"));
+    }
+
+    @Test
+    public void list() {
+	insert();
+
+	Response response = getTarget()
+		.request()
+		.get();
+
+	assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+	String stringReturned = response.readEntity(String.class);
+
+	JsonArray array = Json.createReader(new ByteArrayInputStream(stringReturned.getBytes()))
+		.readArray();
+
+	assertNotNull(array);
+	assertTrue(array.size() > 0);
     }
 
 }

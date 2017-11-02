@@ -1,8 +1,9 @@
 package org.example.hellocloud.greetings.control;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import org.example.hellocloud.greetings.entity.Person;
 
@@ -38,6 +39,10 @@ public class PersonRepository {
 
     public boolean delete(Long id) {
 	return this.list.remove(id) != null;
+    }
+
+    public List<Person> listAll() {
+	return new ArrayList<>(this.list.values());
     }
 
 }

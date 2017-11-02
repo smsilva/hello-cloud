@@ -1,36 +1,27 @@
 package org.example.hellocloud;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-public class HelloCloudTest {
-    
+public class GreestingsResourceTest {
+
     private TestProperties properties;
-    
+    private String url;
+
     @Before
     public void before() throws Exception {
 	this.properties = new TestProperties();
+	this.url = properties.getProperty("hello.url");	
     }
-    
+
     @Test
-    public void getGreetingParameterFromProperties() throws Exception {
-	String greeting = properties.getProperty("hello.greeting");
-	assertEquals("Hello!", greeting);
-    }
-    
-    @Test
-    public void greetingsGet() {
-	String url = properties.getProperty("hello.url");
-	
+    public void greetingsHello() {
 	Client client = ClientBuilder.newClient();
-	
 	Response response = client
 		.target(url)
 		.path("greetings")
@@ -38,15 +29,10 @@ public class HelloCloudTest {
 		.get(Response.class);
 
 	assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+	JsonObject json = response.readEntity(JsonObject.class);
+
+	assertEquals("Hello!", json.getString("message"));
     }
 
-    @Test
-    public void createJsonDuringTheTest() {
-	JsonObject json = Json.createObjectBuilder()
-		.add("hello.greeting", "Good morning!")
-		.build();
-
-	assertTrue(json.containsKey("hello.greeting"));
-    }
-    
 }

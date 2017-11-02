@@ -1,6 +1,7 @@
 package org.example.hellocloud.greetings.resource;
 
 import java.net.URI;
+import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -25,7 +26,16 @@ public class PersonResource {
 
     @Inject
     PersonRepository personRepository;
-
+    
+    @GET
+    public Response list() {
+	List<Person> list = personRepository.listAll();
+	
+	return Response
+		.ok(list)
+		.build();
+    }
+    
     @POST
     public Response post(Person person) {
 	if (person == null) {
