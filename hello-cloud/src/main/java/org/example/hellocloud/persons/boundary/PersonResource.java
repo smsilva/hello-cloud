@@ -1,4 +1,4 @@
-package org.example.hellocloud.greetings.resource;
+package org.example.hellocloud.persons.boundary;
 
 import java.net.URI;
 import java.util.List;
@@ -14,8 +14,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import org.example.hellocloud.greetings.control.PersonRepository;
-import org.example.hellocloud.greetings.entity.Person;
+import org.example.hellocloud.persons.control.PersonRepository;
+import org.example.hellocloud.persons.entity.Person;
 
 @Path("persons")
 @Consumes(MediaType.APPLICATION_JSON)

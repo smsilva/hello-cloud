@@ -1,11 +1,11 @@
-package org.example.hellocloud.greetings.control;
+package org.example.hellocloud.persons.control;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Singleton;
-import org.example.hellocloud.greetings.entity.Person;
+import org.example.hellocloud.persons.entity.Person;
 
 @Singleton
 public class PersonRepository {

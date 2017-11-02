@@ -1,7 +1,8 @@
 package org.example.hellocloud.greetings.control;
 
+import org.example.hellocloud.persons.control.PersonRepository;
 import java.util.List;
-import org.example.hellocloud.greetings.entity.Person;
+import org.example.hellocloud.persons.entity.Person;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

@@ -1,4 +1,4 @@
-package org.example.hellocloud.greetings.entity;
+package org.example.hellocloud.persons.entity;
 
 import javax.validation.constraints.NotNull;
 

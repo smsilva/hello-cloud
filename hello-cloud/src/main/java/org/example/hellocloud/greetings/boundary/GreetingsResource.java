@@ -1,4 +1,4 @@
-package org.example.hellocloud.greetings.resource;
+package org.example.hellocloud.greetings.boundary;
 
 import javax.inject.Inject;
 import javax.json.Json;
