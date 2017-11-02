@@ -1,4 +1,4 @@
-package org.example.hellocloud;
+package org.example.hellocloud.config;
 
 import java.lang.annotation.Documented;
 import static java.lang.annotation.ElementType.FIELD;

@@ -1,4 +1,4 @@
-package org.example.hellocloud;
+package org.example.hellocloud.exceptions;
 
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.Response;

@@ -1,4 +1,4 @@
-package org.example.hellocloud;
+package org.example.hellocloud.config;
 
 import java.io.FileInputStream;
 import java.io.IOException;
