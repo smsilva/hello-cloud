@@ -6,7 +6,6 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,13 +20,13 @@ public class HelloCloudTest {
     }
     
     @Test
-    public void properties() throws Exception {
+    public void getGreetingParameterFromProperties() throws Exception {
 	String greeting = properties.getProperty("hello.greeting");
 	assertEquals("Hello!", greeting);
     }
     
     @Test
-    public void oracle() {
+    public void greetingsGet() {
 	String url = properties.getProperty("hello.url");
 	
 	Client client = ClientBuilder.newClient();
@@ -42,7 +41,7 @@ public class HelloCloudTest {
     }
 
     @Test
-    public void json() {
+    public void createJsonDuringTheTest() {
 	JsonObject json = Json.createObjectBuilder()
 		.add("hello.greeting", "Good morning!")
 		.build();

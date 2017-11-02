@@ -24,7 +24,6 @@
             <artifactId>resteasy-json-p-provider</artifactId>
             <version>3.0.10.Final</version>
         </dependency>
-        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
