@@ -58,6 +58,14 @@ public class PersonResourceTest {
 
 	assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
 	assertEquals("Person gender can't be null", response.getHeaderString("reason"));
+	
+	response = getTarget()
+		.request()
+		.header("Accept-Language", "pt")
+		.post(Entity.json(person.toString()));
+
+	assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+	assertEquals("Sexo da pessoa nao pode ser nulo", response.getHeaderString("reason"));
     }
     
     @Test
