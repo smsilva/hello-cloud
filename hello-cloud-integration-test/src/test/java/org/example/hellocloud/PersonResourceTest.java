@@ -24,24 +24,52 @@ public class PersonResourceTest {
 	this.properties = new TestProperties();
 	this.url = properties.getProperty("hello.url");
     }
-    
+
     private WebTarget getTarget() {
 	return ClientBuilder.newClient()
 		.target(url)
 		.path("persons");
+		
     }
 
     @Test
-    public void insert() {
+    public void insertFailure() {
+	JsonObject person = Json.createObjectBuilder()
+		.add("name", "Silvio Silva")
+		.build();
+
+	Response response = insert(person);
+
+	assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+
+	assertEquals("Person gender can't be null", response.getHeaderString("reason"));
+    }
+    
+    @Test
+    public void insertFailureMessageWithDifferenteLanguages() {
 	JsonObject person = Json.createObjectBuilder()
 		.add("name", "Silvio Silva")
 		.build();
 
 	Response response = getTarget()
 		.request()
+		.header("Accept-Language", "en")
 		.post(Entity.json(person.toString()));
 
-	assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
+	assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatus());
+	assertEquals("Person gender can't be null", response.getHeaderString("reason"));
+    }
+    
+    @Test
+    public void insertWithSuccessful() {
+	JsonObject person = Json.createObjectBuilder()
+		.add("name", "Silvio Silva")
+		.add("gender", "M")
+		.build();
+
+	Response response = insert(person);
+
+	assertEquals(response.getHeaderString("reason"), Response.Status.CREATED.getStatusCode(), response.getStatus());
 
 	String location = response.getHeaderString("Location");
 
@@ -49,9 +77,17 @@ public class PersonResourceTest {
 	assertTrue(location.contains(url));
     }
 
+    private Response insert(JsonObject person) {
+	return getTarget()
+		.request()
+		.header("Accept-Language", "en")
+		.post(Entity.json(person.toString()));
+		
+    }
+
     @Test
     public void getById() {
-	insert();
+	insertWithSuccessful();
 
 	Response response = getTarget()
 		.path("{id}")
@@ -74,7 +110,7 @@ public class PersonResourceTest {
 
     @Test
     public void list() {
-	insert();
+	insertWithSuccessful();
 
 	Response response = getTarget()
 		.request()

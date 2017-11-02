@@ -6,9 +6,9 @@ public class Person {
 
     private Long id;
     private String name;
-    
-    @NotNull
-    private String sexo;
+
+    @NotNull(message = "{person.gender.notnull}")
+    private String gender;
 
     public Person() {
     }
@@ -33,12 +33,12 @@ public class Person {
 	this.name = name;
     }
 
-    public String getSexo() {
-	return sexo;
+    public String getGender() {
+	return gender;
     }
 
-    public void setSexo(String sexo) {
-	this.sexo = sexo;
+    public void setGender(String gender) {
+	this.gender = gender;
     }
 
 }

@@ -3,6 +3,7 @@ package org.example.hellocloud.greetings.resource;
 import java.net.URI;
 import java.util.List;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -37,7 +38,7 @@ public class PersonResource {
     }
     
     @POST
-    public Response post(Person person) {
+    public Response post(@Valid Person person) {
 	if (person == null) {
 	    return Response
 		    .status(Response.Status.BAD_REQUEST)
