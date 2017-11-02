@@ -35,7 +35,7 @@ public class PersonResourceTest {
     @Test
     public void insertFailure() {
 	JsonObject person = Json.createObjectBuilder()
-		.add("name", "Silvio Silva")
+		.add("name", "Silvio Silva #Failure")
 		.build();
 
 	Response response = insert(person);
@@ -48,7 +48,7 @@ public class PersonResourceTest {
     @Test
     public void insertFailureMessageWithDifferenteLanguages() {
 	JsonObject person = Json.createObjectBuilder()
-		.add("name", "Silvio Silva")
+		.add("name", "Name #Failure Dif Lang")
 		.build();
 
 	Response response = getTarget()
@@ -68,12 +68,13 @@ public class PersonResourceTest {
 	assertEquals("Sexo da pessoa nao pode ser nulo", response.getHeaderString("reason"));
     }
     
+    private String generateName() {
+	return String.format("Name #[%s]Ok", this.getList().size());
+    }
+    
     @Test
     public void insertWithSuccessful() {
-	JsonObject person = Json.createObjectBuilder()
-		.add("name", "Silvio Silva")
-		.add("gender", "M")
-		.build();
+	JsonObject person = createValidPerson(generateName());
 
 	Response response = insert(person);
 
@@ -83,6 +84,14 @@ public class PersonResourceTest {
 
 	assertNotNull(location);
 	assertTrue(location.contains(url));
+    }
+
+    private JsonObject createValidPerson(String name) {
+	JsonObject person = Json.createObjectBuilder()
+		.add("name", name)
+		.add("gender", "M")
+		.build();
+	return person;
     }
 
     private Response insert(JsonObject person) {
@@ -133,6 +142,19 @@ public class PersonResourceTest {
 
 	assertNotNull(array);
 	assertTrue(array.size() > 0);
+    }
+    
+    private JsonArray getList() {
+	Response response = getTarget()
+		.request()
+		.get();
+
+	assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+
+	String stringReturned = response.readEntity(String.class);
+
+	return Json.createReader(new ByteArrayInputStream(stringReturned.getBytes()))
+		.readArray();
     }
 
 }
