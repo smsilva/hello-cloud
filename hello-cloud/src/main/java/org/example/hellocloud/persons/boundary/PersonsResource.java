@@ -1,5 +1,6 @@
 package org.example.hellocloud.persons.boundary;
 
+import org.example.hellocloud.infra.Repository;
 import java.net.URI;
 import java.util.List;
 import javax.inject.Inject;
@@ -14,19 +15,19 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import org.example.hellocloud.persons.control.PersonRepository;
+import org.example.hellocloud.infra.BaseRepository;
 import org.example.hellocloud.persons.entity.Person;
 
 @Path("persons")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class PersonResource {
+public class PersonsResource {
 
     @Context
     UriInfo uriInfo;
 
-    @Inject @Silvio
-    PersonRepository personRepository;
+    @Inject @Repository
+    BaseRepository<Person> personRepository;
 
     @GET
     public Response list() {

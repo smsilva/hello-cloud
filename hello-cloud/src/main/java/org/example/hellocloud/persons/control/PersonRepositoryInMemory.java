@@ -1,17 +1,18 @@
 package org.example.hellocloud.persons.control;
 
+import org.example.hellocloud.infra.BaseRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.enterprise.context.ApplicationScoped;
-import org.example.hellocloud.persons.boundary.Silvio;
 import org.example.hellocloud.persons.entity.Person;
+import org.example.hellocloud.infra.Repository;
 
 @ApplicationScoped
-@Silvio
-public class PersonRepositoryInMemory implements Repository<Person>, PersonRepository {
+@Repository
+public class PersonRepositoryInMemory implements BaseRepository<Person>, PersonRepository {
 
     private Long idSequence;
     private Map<Long, Person> list;

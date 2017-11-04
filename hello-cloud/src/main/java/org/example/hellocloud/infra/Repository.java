@@ -1,4 +1,4 @@
-package org.example.hellocloud.persons.boundary;
+package org.example.hellocloud.infra;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.ElementType.FIELD;
@@ -12,5 +12,5 @@ import javax.inject.Qualifier;
 @Qualifier
 @Retention(RUNTIME)
 @Target({METHOD, FIELD, PARAMETER, TYPE})
-public @interface Silvio {
+public @interface Repository {
 }

@@ -1,8 +1,8 @@
-package org.example.hellocloud.persons.control;
+package org.example.hellocloud.infra;
 
 import java.util.List;
 
-public interface Repository<T> {
+public interface BaseRepository<T> {
     
     public T insert(T e) throws Exception;
     public T findById(Long id);

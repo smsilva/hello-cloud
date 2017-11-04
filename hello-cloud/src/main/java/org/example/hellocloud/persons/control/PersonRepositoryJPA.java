@@ -1,16 +1,17 @@
 package org.example.hellocloud.persons.control;
 
+import org.example.hellocloud.infra.BaseRepository;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.example.hellocloud.persons.boundary.Silvio;
 import org.example.hellocloud.persons.entity.Person;
+import org.example.hellocloud.infra.Repository;
 
 @Stateless
 @Dependent
-public class PersonRepositoryJPA implements Repository<Person>, PersonRepository {
+public class PersonRepositoryJPA implements BaseRepository<Person>, PersonRepository {
 
     @PersistenceContext
     EntityManager em;
