@@ -1,6 +1,6 @@
 package org.example.hellocloud.greetings.control;
 
-import org.example.hellocloud.persons.control.PersonRepository;
+import org.example.hellocloud.persons.control.PersonRepositoryInMemory;
 import java.util.List;
 import org.example.hellocloud.persons.entity.Person;
 import static org.junit.Assert.assertEquals;
@@ -12,11 +12,11 @@ import org.junit.Test;
 
 public class PersonRepositoryTest {
 
-    private PersonRepository personRepository;
+    private PersonRepositoryInMemory personRepository;
 
     @Before
     public void before() {
-	this.personRepository = new PersonRepository();
+	this.personRepository = new PersonRepositoryInMemory();
     }
 
     @Test

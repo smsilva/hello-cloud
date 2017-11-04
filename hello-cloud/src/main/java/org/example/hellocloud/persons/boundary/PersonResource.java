@@ -14,7 +14,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import org.example.hellocloud.persons.control.Repository;
+import org.example.hellocloud.persons.control.PersonRepository;
 import org.example.hellocloud.persons.entity.Person;
 
 @Path("persons")
@@ -26,7 +26,7 @@ public class PersonResource {
     UriInfo uriInfo;
 
     @Inject
-    Repository<Person> personRepository;
+    PersonRepository personRepository;
 
     @GET
     public Response list() {
