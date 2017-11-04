@@ -25,7 +25,7 @@ public class PersonResource {
     @Context
     UriInfo uriInfo;
 
-    @Inject
+    @Inject @Silvio
     PersonRepository personRepository;
 
     @GET

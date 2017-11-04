@@ -1,4 +1,4 @@
-package org.example.hellocloud.persons.control;
+package org.example.hellocloud.persons.entity.validation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

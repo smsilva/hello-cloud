@@ -1,8 +1,9 @@
-package org.example.hellocloud.persons.control;
+package org.example.hellocloud.persons.entity.validation;
 
 import javax.inject.Inject;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import org.example.hellocloud.persons.control.PersonRepository;
 
 public class UserNameNotTakenValidator implements ConstraintValidator<UserNameNotTaken, String> {
 

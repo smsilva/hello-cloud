@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.enterprise.context.ApplicationScoped;
+import org.example.hellocloud.persons.boundary.Silvio;
 import org.example.hellocloud.persons.entity.Person;
 
 @ApplicationScoped
+@Silvio
 public class PersonRepositoryInMemory implements Repository<Person>, PersonRepository {
 
     private Long idSequence;

@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.example.hellocloud.persons.control.UserNameNotTaken;
+import org.example.hellocloud.persons.entity.validation.UserNameNotTaken;
 
 @Entity
 @Table(name = "person")
