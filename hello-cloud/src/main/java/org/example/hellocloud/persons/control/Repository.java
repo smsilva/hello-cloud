@@ -2,7 +2,7 @@ package org.example.hellocloud.persons.control;
 
 import java.util.List;
 
-interface Repository<T> {
+public interface Repository<T> {
     
     public T insert(T e) throws Exception;
     public T findById(Long id);
