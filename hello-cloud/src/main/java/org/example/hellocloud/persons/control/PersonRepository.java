@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import javax.ejb.Singleton;
+import javax.enterprise.context.ApplicationScoped;
 import org.example.hellocloud.persons.entity.Person;
 
-@Singleton
-public class PersonRepository {
+@ApplicationScoped
+public class PersonRepository implements Repository<Person> {
 
     private Long idSequence;
     private Map<Long, Person> list;
@@ -19,7 +19,8 @@ public class PersonRepository {
 	this.idSequence = Long.parseLong("0");
     }
 
-    public Person insert(Person person) {
+    @Override
+    public Person insert(Person person) throws Exception {
 	if (person.getId() == null) {
 	    this.idSequence++;
 	    person.setId(this.idSequence);
@@ -30,29 +31,45 @@ public class PersonRepository {
 	return this.findById(person.getId());
     }
 
+    @Override
     public Person findById(Long id) {
 	return this.list.get(id);
     }
 
-    public void update(Person person) {
+    @Override
+    public Person update(Person person) throws Exception {
 	this.list.put(person.getId(), person);
+	return person;
     }
 
-    public boolean delete(Long id) {
-	return this.list.remove(id) != null;
+    @Override
+    public Person delete(Long id) throws Exception {
+	Person p = this.list.get(id);
+	this.list.remove(id);
+	return p;
     }
 
+    @Override
     public List<Person> listAll() {
 	return new ArrayList<>(this.list.values());
     }
-    
+
     public boolean isNameTaken(String name) {
 	Optional<Person> person = this.listAll()
 		.stream()
 		.filter(p -> p.getName().equalsIgnoreCase(name))
 		.findFirst();
-	
+
 	return person.isPresent();
+    }
+
+    @Override
+    public Person delete(Person e) throws Exception {
+	if (e != null) {
+	    return this.delete(e.getId());
+	}
+	
+	return null;
     }
 
 }

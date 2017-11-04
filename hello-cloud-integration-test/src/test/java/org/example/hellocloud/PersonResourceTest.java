@@ -122,7 +122,7 @@ public class PersonResourceTest {
 	assertNotNull(person);
 
 	String name = person.getString("name");
-	assertTrue("Name returned: " + name, name.startsWith("Silvio"));
+	assertTrue("Name returned: " + name, name.startsWith("Name #"));
     }
 
     @Test

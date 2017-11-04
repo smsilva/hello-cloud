@@ -20,7 +20,7 @@ public class PersonRepositoryTest {
     }
 
     @Test
-    public void insert() {
+    public void insert() throws Exception {
 	Person person = new Person("Silvio Silva");
 
 	Person inserted = personRepository.insert(person);
@@ -31,7 +31,7 @@ public class PersonRepositoryTest {
     }
 
     @Test
-    public void find() {
+    public void find() throws Exception {
 	insert();
 
 	Person person = personRepository.findById(Long.parseLong("1"));
@@ -42,7 +42,7 @@ public class PersonRepositoryTest {
     }
 
     @Test
-    public void update() {
+    public void update() throws Exception {
 	insert();
 
 	Person person = personRepository.findById(Long.parseLong("1"));
@@ -55,27 +55,27 @@ public class PersonRepositoryTest {
     }
 
     @Test
-    public void delete() {
+    public void delete() throws Exception {
 	insert();
 
 	Person person = personRepository.findById(Long.parseLong("1"));
 
-	boolean deleted = personRepository.delete(person.getId());
-	assertTrue(deleted);
+	Person deleted = personRepository.delete(person.getId());
+	assertNotNull(deleted);
 
 	person = personRepository.findById(Long.parseLong("1"));
 	assertTrue(person == null);
     }
 
     @Test
-    public void list() {
+    public void list() throws Exception {
 	insert();
 	List<Person> list = personRepository.listAll();
 	assertTrue(list.size() > 0);
     }
 
     @Test
-    public void nameAlreadyTaken() {
+    public void nameAlreadyTaken() throws Exception {
 	String name = "Silvio Silva";
 
 	assertFalse(personRepository.isNameTaken(name));

@@ -27,16 +27,16 @@ public class PersonResource {
 
     @Inject
     PersonRepository personRepository;
-    
+
     @GET
     public Response list() {
 	List<Person> list = personRepository.listAll();
-	
+
 	return Response
 		.ok(list)
 		.build();
     }
-    
+
     @POST
     public Response post(@Valid Person person) {
 	if (person == null) {
@@ -45,16 +45,23 @@ public class PersonResource {
 		    .build();
 	}
 
-	Person inserted = personRepository.insert(person);
+	Person inserted;
+	try {
+	    inserted = personRepository.insert(person);
+	    
+	    URI uri = uriInfo.getRequestUriBuilder()
+		    .path(inserted.getId().toString())
+		    .build();
 
-	URI uri = uriInfo.getRequestUriBuilder()
-		.path(inserted.getId().toString())
-		.build();
-
-	return Response
-		.created(uri)
-		.build();
-
+	    return Response
+		    .created(uri)
+		    .build();
+	} catch (Exception ex) {
+	    return Response
+		    .serverError()
+		    .header("reason", ex.getMessage())
+		    .build();
+	}
     }
 
     @GET
