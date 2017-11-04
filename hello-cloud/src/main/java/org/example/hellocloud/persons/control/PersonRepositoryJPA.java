@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.example.hellocloud.infra.Repository;
@@ -13,6 +14,7 @@ import org.example.hellocloud.persons.entity.Person;
 
 @Stateless
 @Repository
+@Interceptors(RepositoryInterceptor.class)
 public class PersonRepositoryJPA implements BaseRepository<Person>, PersonRepository {
 
     @PersistenceContext
