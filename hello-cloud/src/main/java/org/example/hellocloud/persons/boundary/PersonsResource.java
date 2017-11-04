@@ -3,8 +3,6 @@ package org.example.hellocloud.persons.boundary;
 import org.example.hellocloud.infra.Repository;
 import java.net.URI;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -43,13 +41,7 @@ public class PersonsResource {
 	JsonArrayBuilder builder = Json.createArrayBuilder();
 
 	list.forEach(p -> {
-	    
-	    JsonObject json = Json.createObjectBuilder()
-		    .add("id", p.getId())
-		    .add("name", p.getName())
-		    .build();
-	    
-	    builder.add(json);
+	    builder.add(toJson(p));
 	});
 	
 	JsonArray array = builder.build();
@@ -59,12 +51,16 @@ public class PersonsResource {
 		.build();
     }
 
-    private static final Logger LOG = Logger.getLogger(PersonsResource.class.getName());
+    private JsonObject toJson(Person p) {
+	JsonObject json = Json.createObjectBuilder()
+		.add("id", p.getId())
+		.add("name", p.getName())
+		.build();
+	return json;
+    }
 
     @POST
     public Response post(@Valid Person person) {
-	LOG.log(Level.INFO, "post({0})", person);
-
 	if (person == null) {
 	    return Response
 		    .status(Response.Status.BAD_REQUEST)
@@ -102,7 +98,7 @@ public class PersonsResource {
 	}
 
 	return Response
-		.ok(person)
+		.ok(toJson(person))
 		.build();
     }
 
