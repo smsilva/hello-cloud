@@ -5,7 +5,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -25,7 +24,6 @@ import javax.ws.rs.core.UriInfo;
 import org.example.hellocloud.infra.BaseRepository;
 import org.example.hellocloud.persons.entity.Person;
 
-@Stateless
 @Path("persons")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
