@@ -31,6 +31,20 @@ public class PersonResourceTest {
 		.path("persons");
 		
     }
+    
+    @Test
+    public void insertWithSuccessful() {
+	JsonObject person = createValidPerson(generateName());
+
+	Response response = insert(person);
+
+	assertEquals(response.getHeaderString("reason"), Response.Status.CREATED.getStatusCode(), response.getStatus());
+
+	String location = response.getHeaderString("Location");
+
+	assertNotNull(location);
+	assertTrue(location.contains(url));
+    }
 
     @Test
     public void insertFailure() {
@@ -69,23 +83,9 @@ public class PersonResourceTest {
     }
     
     private String generateName() {
-	return String.format("Name #[%s]Ok", this.getList().size());
+	return String.format("Name #[%s]Ok", this.getList().size() + 1);
     }
     
-    @Test
-    public void insertWithSuccessful() {
-	JsonObject person = createValidPerson(generateName());
-
-	Response response = insert(person);
-
-	assertEquals(response.getHeaderString("reason"), Response.Status.CREATED.getStatusCode(), response.getStatus());
-
-	String location = response.getHeaderString("Location");
-
-	assertNotNull(location);
-	assertTrue(location.contains(url));
-    }
-
     private JsonObject createValidPerson(String name) {
 	JsonObject person = Json.createObjectBuilder()
 		.add("name", name)
@@ -95,11 +95,11 @@ public class PersonResourceTest {
     }
 
     private Response insert(JsonObject person) {
+	System.out.println("insert() :: person=" + person.toString());
 	return getTarget()
 		.request()
 		.header("Accept-Language", "en")
 		.post(Entity.json(person.toString()));
-		
     }
 
     @Test
@@ -152,6 +152,8 @@ public class PersonResourceTest {
 	assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
 	String stringReturned = response.readEntity(String.class);
+	
+	System.out.println("getList() :: stringReturned=" + stringReturned);
 
 	return Json.createReader(new ByteArrayInputStream(stringReturned.getBytes()))
 		.readArray();

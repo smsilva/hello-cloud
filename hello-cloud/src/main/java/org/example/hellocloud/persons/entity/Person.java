@@ -3,7 +3,6 @@ package org.example.hellocloud.persons.entity;
 import java.io.Serializable;
 import java.util.Map;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;

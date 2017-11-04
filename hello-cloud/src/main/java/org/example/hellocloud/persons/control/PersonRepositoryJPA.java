@@ -1,16 +1,18 @@
 package org.example.hellocloud.persons.control;
 
+import java.math.BigInteger;
 import org.example.hellocloud.infra.BaseRepository;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.enterprise.context.Dependent;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.example.hellocloud.persons.entity.Person;
 import org.example.hellocloud.infra.Repository;
+import org.example.hellocloud.persons.entity.Person;
 
 @Stateless
-@Dependent
+@Repository
 public class PersonRepositoryJPA implements BaseRepository<Person>, PersonRepository {
 
     @PersistenceContext
@@ -54,13 +56,18 @@ public class PersonRepositoryJPA implements BaseRepository<Person>, PersonReposi
 	return em.createQuery("SELECT p FROM Person p", Person.class)
 		.getResultList();
     }
-
+    
     @Override
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public boolean isNameTaken(String name) {
-	return !em.createQuery("SELECT p FROM Person p WHERE p.name = :NAME", Person.class)
+	List<BigInteger> resultList = em
+		.createNativeQuery("SELECT COUNT(*) FROM person p WHERE UPPER(p.name) = UPPER(:NAME)")
 		.setParameter("NAME", name)
-		.getResultList()
-		.isEmpty();
+		.getResultList();
+	
+	BigInteger result = resultList.get(0);
+
+	return result.intValue() > 0;
     }
 
 }

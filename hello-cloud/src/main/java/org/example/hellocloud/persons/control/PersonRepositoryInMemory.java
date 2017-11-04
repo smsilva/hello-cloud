@@ -8,10 +8,8 @@ import java.util.Map;
 import java.util.Optional;
 import javax.enterprise.context.ApplicationScoped;
 import org.example.hellocloud.persons.entity.Person;
-import org.example.hellocloud.infra.Repository;
 
 @ApplicationScoped
-@Repository
 public class PersonRepositoryInMemory implements BaseRepository<Person>, PersonRepository {
 
     private Long idSequence;
