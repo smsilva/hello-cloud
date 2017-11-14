@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 
-@ApplicationScoped
+@Dependent
 public class ConfigurationExposer {
 
     private final Properties properties = new Properties();
