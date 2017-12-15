@@ -26,7 +26,9 @@ public class ConfigurationExposer {
     @Config("")
     @Produces
     public String exposeConfig(InjectionPoint injectionPoint) {
-	Config config = injectionPoint.getAnnotated().getAnnotation(Config.class);
+	Config config = injectionPoint
+		.getAnnotated()
+		.getAnnotation(Config.class);
 	
 	if (config != null) {
 	    return this.properties.getProperty(config.value());
