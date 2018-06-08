@@ -29,7 +29,7 @@ public class GreestingsResourceTest {
 		.get(Response.class);
 
 	assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-
+	
 	JsonObject json = response.readEntity(JsonObject.class);
 
 	assertEquals("Hello!", json.getString("message"));
